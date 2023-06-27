@@ -1,32 +1,37 @@
 package com.wellsfargo.counselor.entity;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Portfolio {
 
 	@Id
-	@GeneratedValue()
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long portfolioId;
-	@Column(nullable = false)
-	private long clientId;
-	@Column(nullable = false)
-	private Date creationDate;
 
-	public Portfolio() {
+	@OneToOne
+	@JoinColumn(name = "client_id")
+	private Client client;
+
+	@Column(nullable = false)
+	private String creationDate;
+
+	protected Portfolio() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Portfolio(long portfolioId, long clientId, Date creationDate) {
+	protected Portfolio(long portfolioId, Client client, String creationDate) {
 		super();
 		this.portfolioId = portfolioId;
-		this.clientId = clientId;
+		this.client = client;
 		this.creationDate = creationDate;
 	}
 
@@ -38,19 +43,11 @@ public class Portfolio {
 		this.portfolioId = portfolioId;
 	}
 
-	public long getClientId() {
-		return clientId;
-	}
-
-	public void setClientId(long clientId) {
-		this.clientId = clientId;
-	}
-
-	public Date getCreationDate() {
+	public String getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(Date creationDate) {
+	public void setCreationDate(String creationDate) {
 		this.creationDate = creationDate;
 	}
 

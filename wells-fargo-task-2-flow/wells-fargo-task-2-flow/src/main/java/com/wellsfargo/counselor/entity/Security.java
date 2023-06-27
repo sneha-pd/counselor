@@ -5,37 +5,47 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Security {
 
 	@Id
-	@GeneratedValue()
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long securityId;
-	@Column(nullable = false)
-	private long portfolioId;
+
+	@ManyToOne
+	@JoinColumn(name = "portfolio_id")
+	private Portfolio portfolio;
+
 	@Column(nullable = false)
 	private String name;
+
 	@Column(nullable = false)
 	private String category;
+
 	@Column(nullable = false)
-	private long purchasePrice;
+	private float purchasePrice;
+
 	@Column(nullable = false)
 	private Date purchaseDate;
-	@Column(nullable = false)
-	private String quantity;
 
-	public Security() {
+	@Column(nullable = false)
+	private float quantity;
+
+	protected Security() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Security(long securityId, long portfolioId, String name, String category, long purchasePrice,
-			Date purchaseDate, String quantity) {
+	protected Security(long securityId, Portfolio portfolio, String name, String category, float purchasePrice,
+			Date purchaseDate, float quantity) {
 		super();
 		this.securityId = securityId;
-		this.portfolioId = portfolioId;
+		this.portfolio = portfolio;
 		this.name = name;
 		this.category = category;
 		this.purchasePrice = purchasePrice;
@@ -51,12 +61,12 @@ public class Security {
 		this.securityId = securityId;
 	}
 
-	public long getPortfolioId() {
-		return portfolioId;
+	public Portfolio getPortfolio() {
+		return portfolio;
 	}
 
-	public void setPortfolioId(long portfolioId) {
-		this.portfolioId = portfolioId;
+	public void setPortfolio(Portfolio portfolio) {
+		this.portfolio = portfolio;
 	}
 
 	public String getName() {
@@ -75,11 +85,11 @@ public class Security {
 		this.category = category;
 	}
 
-	public long getPurchasePrice() {
+	public float getPurchasePrice() {
 		return purchasePrice;
 	}
 
-	public void setPurchasePrice(long purchasePrice) {
+	public void setPurchasePrice(float purchasePrice) {
 		this.purchasePrice = purchasePrice;
 	}
 
@@ -91,11 +101,11 @@ public class Security {
 		this.purchaseDate = purchaseDate;
 	}
 
-	public String getQuantity() {
+	public float getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(String quantity) {
+	public void setQuantity(float quantity) {
 		this.quantity = quantity;
 	}
 
